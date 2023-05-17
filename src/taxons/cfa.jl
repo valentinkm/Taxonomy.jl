@@ -64,6 +64,10 @@ struct HierarchicalCFA <: AbstractCFA
     crossloadings_outgoing::Judgement{ <: Union{ <: AbstractArray{ <: Number}, <: Int, Missing}}
     HierarchicalCFA(n_sample, n_variables, loadings,factor_variance, error_variances, error_covariances_within, error_covariances_between, crossloadings_incoming, crossloadings_outgoing) =
         new(J(n_sample), J(n_variables), J(loadings), J(factor_variance), J(error_variances), J(error_covariances_within), J(error_covariances_between), J(crossloadings_incoming), J(crossloadings_outgoing))
+    measurement_model::Judgement{ <: Union{<:AbstractArray{<: Factor}, Missing}}
+    hierarchical_model::Judgement{ <: Union{<:AbstractArray{<: StenoGraphs.AbstractEdge}, Missing}}
+    CFA(n_sample, measurement_model, structural_model) = 
+    new(J(n_sample), J(measurement_model), J(structural_model))
 end
 
 #multiple dispatch function for CFAFactor; insert either simple or hierachical CFA
@@ -123,25 +127,30 @@ AbstractCFA
 
 ```
 """
-struct HierarchicalCFA <: Taxon
+struct HierarchicalCFA <: AbstractCFA
     n_sample::Judgement{ <: Union{ <:Int, Missing}}
-    measurement_model::Judgement{ <: Union{<:AbstractArray{<: Factor}, Missing}}
     structural_model::Judgement{ <: Union{<:AbstractArray{<: StenoGraphs.AbstractEdge}, Missing}}
-    CFA(n_sample, measurement_model, structural_model) = 
-    new(J(n_sample), J(measurement_model), J(structural_model))
+    HierarchicalCFA(n_sample, structural_model) = 
+    new(J(n_sample), J(structural_model))
 end
 
-struct SimpleCFA <: Taxon
+struct SimpleCFA <: AbstractCFA
     n_sample::Judgement{ <: Union{ <:Int, Missing}}
-    measurement_model::Judgement{ <: Union{<:AbstractArray{<: Factor}, Missing}}
-    hierarchical_model::Judgement{ <: Union{<:AbstractArray{<: StenoGraphs.AbstractEdge}, Missing}}
-    CFA(n_sample, measurement_model, structural_model) = 
-    new(J(n_sample), J(measurement_model), J(structural_model))
+    structural_model::Judgement{ <: Union{<:AbstractArray{<: StenoGraphs.AbstractEdge}, Missing}}
+    SimpleCFA(n_sample, structural_model) = 
+    new(J(n_sample), J(structural_model))
 end
 
-function CFA(;n_sample = missing,
-    measurement_model,
-    hierarchical_model) # hier hierarchical CFA model festlegen
-    CFA(n_sample, measurement_model, hierarchical_model)
+
+function CFA(tf::TaxonFactor; n_sample = missing, structural_model)
+    if tf.taxon isa SimpleCFA
+        SimpleCFA(n_sample, structural_model)
+    elseif tf.taxon isa HierarchicalCFA
+        HierarchicalCFA(n_sample, structural_model)
+    else
+        error("Unsupported type: ", typeof(tf.taxon))
+    end
+    return tf.factor
 end
+
 

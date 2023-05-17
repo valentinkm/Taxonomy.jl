@@ -1,6 +1,6 @@
 """
-LGCM Taxon. 
-Taxon for Linear Growth Curve Model.
+AbstractSEM Taxon. 
+Taxon for SEM.
 
     ## Arguments
 

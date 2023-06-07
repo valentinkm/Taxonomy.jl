@@ -57,9 +57,13 @@ Taxon
 
 ```@docs
 Taxon
-Factor
-CFA
-LGCM
+AbstractCFA
+Measurement
+SimpleLGCM
+AbstractPathmodel
+Structural
+NoAbstractTaxon
+NoTaxon
 ```
 
 ## Extractors

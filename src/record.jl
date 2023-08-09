@@ -3,7 +3,7 @@ struct Record
     id::Union{Base.UUID, Missing}
     location::AbstractLocation
     meta::AbstractMeta
-    no_access::Bool = false
+    no_access::Bool
     taxons::Union{Vector{<: Taxon}, Missing}
     spec::Union{Judgement, Missing}
     data::Union{Judgement, Missing}

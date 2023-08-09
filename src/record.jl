@@ -8,8 +8,8 @@ struct Record
     spec::Union{Judgement, Missing}
     data::Union{Judgement, Missing}
 end
-function Record(rater, id::String, location, meta, taxons, spec, data)
-    Record(rater, Base.UUID(id), location, meta, taxons, spec, data)
+function Record(rater, id::String, location, meta, taxons, spec, data, no_access)
+    Record(rater, Base.UUID(id), location, meta, taxons, spec, data, no_access)
 end
 
 function Record(; rater = missing, id = missing, location = missing, meta = missing, taxons = missing, spec = missing, data = missing, no_access = false)

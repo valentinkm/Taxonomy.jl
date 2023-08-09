@@ -3,6 +3,7 @@ struct Record
     id::Union{Base.UUID, Missing}
     location::AbstractLocation
     meta::AbstractMeta
+    no_access::Bool = false
     taxons::Union{Vector{<: Taxon}, Missing}
     spec::Union{Judgement, Missing}
     data::Union{Judgement, Missing}
@@ -11,7 +12,7 @@ function Record(rater, id::String, location, meta, taxons, spec, data)
     Record(rater, Base.UUID(id), location, meta, taxons, spec, data)
 end
 
-function Record(; rater = missing, id = missing, location = missing, meta = missing, taxons = missing, spec = missing, data = missing)
+function Record(; rater = missing, id = missing, location = missing, meta = missing, taxons = missing, spec = missing, data = missing, no_access = false)
     if ismissing(rater)
         @warn "Please provide your rater ID. This should be your initials."
     end
@@ -42,7 +43,7 @@ function Record(; rater = missing, id = missing, location = missing, meta = miss
     if ismissing(data)
         @warn "`data` is missing. Maybe you mean `NoJudgment()`?"
     end
-    Record(rater, id, location, meta, taxons, spec, data)
+    Record(rater, id, location, meta, taxons, spec, data, no_access)
 end
 
 id(x::Record) = x.id        
@@ -52,5 +53,6 @@ MetaData(x::Record) = x.meta
 location(x::Record) = x.location
 spec(x::Record) = x.spec
 data(x::Record) = x.data
+no_access(x::Record) = x.no_access
 
 Base.length(::Record) = 1

@@ -46,8 +46,8 @@ macro newjudgement(name, level, doc, type=Any, check=x -> nothing, unique=true)
                 $check(r)
                 Judgements.check_certainty(c)
                 if r isa NamedTuple
-                    fields = fieldnames(typeof(r))
-                    r = NamedTuple{fields}([get(r, f, missing) for f in fields])
+                    expected_fields = fieldnames(T.parameters[1])
+                    r = NamedTuple{expected_fields}([get(r, f, missing) for f in expected_fields])
                 end
                 new{T}(r, c, l)
             end

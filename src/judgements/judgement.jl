@@ -45,6 +45,10 @@ macro newjudgement(name, level, doc, type=Any, check=x -> nothing, unique=true)
             function $name{T}(r, c=1.0, l=missing) where {T}
                 $check(r)
                 Judgements.check_certainty(c)
+                if T <: NamedTuple
+                    fields = fieldnames(T)
+                    r = NamedTuple{fields}([get(r, f, missing) for f in fields])
+                end
                 new{T}(r, c, l)
             end
         end

@@ -1,4 +1,4 @@
-base_types = [:Bool :Number :Int :String]
+base_types = [:Bool :Number :Int :String :(Fixed{<:Number})]
 vec_types = @eval [:(Vector{<: Union{Missing, $x}}) for x in base_types]
 types = [base_types vec_types]
 names = Symbol.([("Judgement" .* String.(base_types)) ("JudgementVec" .* String.(base_types))])

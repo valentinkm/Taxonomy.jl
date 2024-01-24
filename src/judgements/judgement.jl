@@ -114,6 +114,7 @@ If `rating` is called on a `Judgement` it returns the rating, on everything it r
 """
 rating(x) = x
 rating(x::AbstractJudgement) = x.rating
+rating(x::Fixed) = x.value
 
 """
 Extract certainty from Judgement.

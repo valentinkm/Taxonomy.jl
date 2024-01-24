@@ -31,8 +31,8 @@ Measurement
 """
 struct Measurement <: AbstractCFA
     n_variables::JudgementInt
-    loadings::Union{JudgementVecNumber, Fixed}
-    factor_variance::Union{JudgementNumber, Fixed}
+    loadings::JudgementVecNumber
+    factor_variance::JudgementNumber
     error_variances::JudgementVecNumber
     error_covariances_within::JudgementVecNumber
     error_covariances_between::JudgementVecNumber

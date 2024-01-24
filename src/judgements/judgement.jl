@@ -65,7 +65,7 @@ strip_fixed(x::Number) = x
 
 macro newjudgement(name, level, doc, type=Any, check=x -> nothing, unique=true)
     inner = quote
-        struct $name{T<:Union{<:$(type),Missing}} <: AbstractJudgement{T}
+        struct $name{T<:Union{<:$(type),Missing,Fixed{Float64}}} <: AbstractJudgement{T}
             rating::T
             certainty::Float64
             comment::Union{String,Missing}

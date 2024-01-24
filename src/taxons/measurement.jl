@@ -99,5 +99,3 @@ Fixed{Float64}(0.7)
 struct Fixed{T <: Number} <: Number
     x::T
 end
-strip_fixed(x::Fixed) = x.x
-strip_fixed(x::Number) = x

@@ -5,6 +5,8 @@ module Judgements
     export check_judgement_level, correct_judgement_level, judgements
     include("level.jl")
 
+    include("fixed.jl")
+
     export @newjudgement
     export J, Judgement, NoJudgement, convert, rating, comment, certainty, judgement_key
     include("judgement.jl")

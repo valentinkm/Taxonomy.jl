@@ -19,8 +19,8 @@ fixed_loading = Fixed(0.7)
 Fixed{Float64}(0.7)
 ```
 """
-struct Fixed{T <: Number} <: AbstractJudgement{T}
+struct Fixed{T <: Number} <: Number
     value::T
 end
-strip_fixed(x::Fixed) = x.x
+strip_fixed(x::Fixed) = x.value
 strip_fixed(x::Number) = x
